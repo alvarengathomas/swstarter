@@ -1,5 +1,5 @@
 {
-  "name": "lawn-starter-exercise",
+  "name": "@sw-starter/monorepo",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -18,7 +18,6 @@
   },
   "packageManager": "npm@11.5.2",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ]
 }

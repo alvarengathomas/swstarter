@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Laravel API Backend
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: sw-starter-api
+    environment:
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_URL: http://localhost:8000
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/var/www/html
+    networks:
+      - sw-starter-network
+
+  # Laravel Scheduler for statistics computation
+  scheduler:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: sw-starter-scheduler
+    environment:
+      APP_ENV: local
+      APP_DEBUG: true
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    depends_on:
+      - api
+    volumes:
+      - ./apps/api:/var/www/html
+    command: ["php", "artisan", "schedule:work"]
+    networks:
+      - sw-starter-network
+
+  # React Frontend
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: sw-starter-web
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - sw-starter-network
+
+networks:
+  sw-starter-network:
+    driver: bridge

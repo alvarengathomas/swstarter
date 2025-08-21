@@ -113,7 +113,7 @@ composer run dev                     # Full development mode
 ## 📊 API Endpoints
 
 - `GET /api/health` - Health check endpoint
-- `POST /api/search` - Search for people or films
+- `GET /api/search` - Search for people or films
 - `GET /api/person/{id}` - Get person details with films
 - `GET /api/film/{id}` - Get film details with characters
 - `GET /api/statistics` - Get usage statistics (updated every 5 minutes)
@@ -167,7 +167,7 @@ QUEUE_CONNECTION=sync
 
 ### Frontend
 ```
-VITE_API_URL=http://localhost:8000
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
 ## 🚢 Deployment
